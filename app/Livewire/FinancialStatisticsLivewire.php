@@ -23,21 +23,22 @@ class FinancialStatisticsLivewire extends Component
     public function render()
     {
         // Monthly trend data (12 months)
-        $monthlyData = FinancialRecord::where('user_id', $this->auth->id)
-            ->whereYear('transaction_date', $this->selectedYear)
-            ->select(
-                DB::raw('MONTH(transaction_date) as month'),
-                DB::raw('SUM(CASE WHEN type = "income" THEN amount ELSE 0 END) as total_income'),
-                DB::raw('SUM(CASE WHEN type = "expense" THEN amount ELSE 0 END) as total_expense')
-            )
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+        $monthlyData = FinancialRecord::select(
+        DB::raw('EXTRACT(MONTH FROM transaction_date) AS month'),
+        DB::raw('SUM(CASE WHEN type = \'income\' THEN amount ELSE 0 END) AS total_income'),
+        DB::raw('SUM(CASE WHEN type = \'expense\' THEN amount ELSE 0 END) AS total_expense')
+    )
+    ->where('user_id', $this->auth->id)
+    ->whereRaw('EXTRACT(YEAR FROM transaction_date) = ?', [$this->selectedYear])
+    ->groupBy(DB::raw('EXTRACT(MONTH FROM transaction_date)'))
+    ->orderBy(DB::raw('EXTRACT(MONTH FROM transaction_date)'))
+    ->get();
+
 
         // Category breakdown for selected month
         $categoryData = FinancialRecord::where('user_id', $this->auth->id)
-            ->whereYear('transaction_date', $this->selectedYear)
-            ->whereMonth('transaction_date', $this->selectedMonth)
+            ->whereRaw('EXTRACT(YEAR FROM transaction_date) = ?', [$this->selectedYear])
+            ->whereRaw('EXTRACT(MONTH FROM transaction_date) = ?', [$this->selectedMonth])
             ->select('category', 'type', DB::raw('SUM(amount) as total'))
             ->groupBy('category', 'type')
             ->get();

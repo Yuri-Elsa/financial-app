@@ -3,7 +3,7 @@
         <div class="card-body">
             <div>
                 <div class="text-center">
-                    <img src="/logo.png" alt="Logo">
+                    <img src="/logo.png" alt="Logo" class="img-fluid mb-3" style="max-width: 120px;">
                     <h2>Masuk</h2>
                 </div>
                 <hr>

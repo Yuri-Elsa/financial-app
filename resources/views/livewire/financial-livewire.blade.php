@@ -1,4 +1,5 @@
-<div class="cute-pink-bg" style="padding: 20px 0;">
+{{-- resources/views/livewire/financial-livewire.blade.php --}}
+<div class="cute-pink-bg" style="padding: 20px 0;" wire:ignore.self>
     <!-- Awan-awan lucu -->
     <div class="cloud cloud-1"></div>
     <div class="cloud cloud-2"></div>
@@ -171,7 +172,7 @@
         </div>
     </div>
 
-    {{-- Modals --}}
+    {{-- Modals tetap di sini tapi akan di-teleport ke body --}}
     @include('components.modals.financial.add')
     @include('components.modals.financial.edit')
     @include('components.modals.financial.delete')

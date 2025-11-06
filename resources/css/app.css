@@ -22,7 +22,6 @@
     min-height: 100vh;
     position: relative;
     overflow: hidden;
-    z-index: 1;
 }
 
 /* Animasi awan */
@@ -170,7 +169,7 @@
     );
     animation: float-cloud 8s ease-in-out infinite;
     pointer-events: none !important;
-    z-index: 1 !important;
+    z-index: 0 !important;
 }
 
 .cute-input {
@@ -275,10 +274,10 @@
 }
 
 /* ============================================================
-   🔗 INTERAKSI & FIXES
+   🔗 INTERAKSI & FIXES - SOLUSI UTAMA DENGAN CSS!
    ============================================================ */
 
-/* CRITICAL: Ensure all interactive elements are above decorative elements */
+/* CRITICAL: Decorative elements di belakang semua */
 .cloud {
     pointer-events: none !important;
     z-index: 0 !important;
@@ -292,19 +291,20 @@
 
 .cute-card::before {
     pointer-events: none !important;
-    z-index: 1 !important;
+    z-index: 0 !important;
 }
 
-/* Make sure all interactive elements work */
+/* Card elements */
 .cute-card,
 .card,
 .card-header,
 .card-body,
 .card-footer {
     position: relative;
-    z-index: 100 !important;
+    z-index: 10 !important;
 }
 
+/* Interactive elements */
 form,
 input,
 button,
@@ -322,48 +322,80 @@ th,
 label,
 span {
     position: relative;
-    z-index: 101 !important;
+    z-index: 11 !important;
     pointer-events: auto !important;
-    cursor: pointer;
 }
 
 a,
 .cute-link,
 .cute-auth-link {
     position: relative;
-    z-index: 102 !important;
+    z-index: 12 !important;
     pointer-events: auto !important;
     cursor: pointer;
 }
 
-/* Modal fixes - HIGHEST PRIORITY */
+/* ============================================================
+   🎯 MODAL FIX - INI SOLUSINYA!
+   ============================================================ */
+
+/* Reset positioning untuk modal dan parent-nya */
+.cute-pink-bg,
+.container,
+.card {
+    /* Jangan pakai position: relative untuk parent modal */
+    transform: none !important;
+}
+
+/* Modal harus punya positioning sendiri yang independen */
 .modal-backdrop {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
     z-index: 1040 !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .modal {
-    z-index: 1050 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1055 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
 }
 
 .modal-dialog {
-    z-index: 1051 !important;
-    position: relative;
+    position: relative !important;
+    width: auto !important;
+    margin: 1.75rem auto !important;
+    pointer-events: none !important;
+    z-index: 1060 !important;
+}
+
+.modal.show .modal-dialog {
+    transform: none !important;
 }
 
 .modal-content {
-    z-index: 1052 !important;
-    position: relative;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
     pointer-events: auto !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    border-radius: 0.3rem !important;
+    outline: 0 !important;
+    z-index: 1065 !important;
 }
 
-.modal-header,
-.modal-body,
-.modal-footer {
-    z-index: 1053 !important;
-    position: relative;
-    pointer-events: auto !important;
-}
-
+/* Semua element dalam modal harus clickable */
 .modal *,
 .modal button,
 .modal input,
@@ -372,13 +404,14 @@ a,
 .modal label,
 .modal .form-control,
 .modal .form-select,
-.modal .btn {
-    z-index: 1054 !important;
-    position: relative;
+.modal .btn,
+.modal .btn-close,
+.modal form {
     pointer-events: auto !important;
+    z-index: auto !important;
 }
 
-/* Ensure buttons are always clickable */
+/* Buttons always clickable */
 button,
 .btn,
 .cute-btn,

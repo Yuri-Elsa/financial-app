@@ -52,7 +52,7 @@
     border-radius: 50%;
     z-index: 0 !important;
     opacity: 0.8;
-    pointer-events: none;
+    pointer-events: none !important;
 }
 .cloud::before,
 .cloud::after {
@@ -60,6 +60,7 @@
     position: absolute;
     background: rgba(255, 255, 255, 0.7);
     border-radius: 100px;
+    pointer-events: none !important;
 }
 
 /* Variasi awan */
@@ -169,6 +170,7 @@
     );
     animation: float-cloud 8s ease-in-out infinite;
     pointer-events: none !important;
+    z-index: 1 !important;
 }
 
 .cute-input {
@@ -194,6 +196,7 @@
     font-weight: 600;
     box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 .cute-btn:hover {
     transform: translateY(-3px);
@@ -249,35 +252,142 @@
     border-radius: 15px;
     padding: 8px 20px;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 .cute-btn-outline:hover {
     background: #ff69b4;
     color: white;
 }
 
+.cute-btn-secondary {
+    background: linear-gradient(135deg, #ffb6c1 0%, #ffa6b6 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.cute-btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4);
+}
+
 /* ============================================================
    🔗 INTERAKSI & FIXES
    ============================================================ */
+
+/* CRITICAL: Ensure all interactive elements are above decorative elements */
+.cloud {
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+.cute-pink-bg::before,
+.cute-pink-bg::after {
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+.cute-card::before {
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+/* Make sure all interactive elements work */
+.cute-card,
+.card,
+.card-header,
+.card-body,
+.card-footer {
+    position: relative;
+    z-index: 100 !important;
+}
+
 form,
 input,
 button,
-.cute-card {
+select,
+textarea,
+.form-control,
+.form-select,
+.btn,
+.btn-close,
+table,
+.table,
+tr,
+td,
+th,
+label,
+span {
     position: relative;
-    z-index: 10 !important;
+    z-index: 101 !important;
+    pointer-events: auto !important;
+    cursor: pointer;
 }
+
 a,
 .cute-link,
 .cute-auth-link {
     position: relative;
-    z-index: 20 !important;
+    z-index: 102 !important;
+    pointer-events: auto !important;
+    cursor: pointer;
+}
+
+/* Modal fixes - HIGHEST PRIORITY */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+.modal {
+    z-index: 1050 !important;
+}
+
+.modal-dialog {
+    z-index: 1051 !important;
+    position: relative;
+}
+
+.modal-content {
+    z-index: 1052 !important;
+    position: relative;
     pointer-events: auto !important;
 }
-.cute-card::after,
-.cute-pink-bg::before,
-.cute-pink-bg::after,
-.cloud {
-    pointer-events: none !important;
+
+.modal-header,
+.modal-body,
+.modal-footer {
+    z-index: 1053 !important;
+    position: relative;
+    pointer-events: auto !important;
 }
+
+.modal *,
+.modal button,
+.modal input,
+.modal select,
+.modal textarea,
+.modal label,
+.modal .form-control,
+.modal .form-select,
+.modal .btn {
+    z-index: 1054 !important;
+    position: relative;
+    pointer-events: auto !important;
+}
+
+/* Ensure buttons are always clickable */
+button,
+.btn,
+.cute-btn,
+.cute-btn-outline,
+.cute-btn-secondary {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
 a:hover {
     text-decoration: underline;
     color: #ff69b4;

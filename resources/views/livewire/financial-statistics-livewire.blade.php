@@ -1,147 +1,161 @@
-<div class="mt-3">
-    <div class="card">
-        <div class="card-header d-flex">
-            <div class="flex-fill">
-                <a href="{{ route('app.financial.index') }}" class="text-decoration-none">
-                    <small class="text-muted">&lt; Kembali</small>
-                </a>
-                <h3 class="mt-2">Statistik Keuangan</h3>
-            </div>
-        </div>
-        <div class="card-body">
-            {{-- Filter --}}
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <label class="form-label">Tahun</label>
-                    <select class="form-select" wire:model.live="selectedYear">
-                        @for ($year = date('Y'); $year >= 2020; $year--)
-                            <option value="{{ $year }}">{{ $year }}</option>
-                        @endfor
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Bulan (untuk kategori)</label>
-                    <select class="form-select" wire:model.live="selectedMonth">
-                        @for ($month = 1; $month <= 12; $month++)
-                            <option value="{{ str_pad($month, 2, '0', STR_PAD_LEFT) }}">
-                                {{ DateTime::createFromFormat('!m', $month)->format('F') }}
-                            </option>
-                        @endfor
-                    </select>
-                </div>
-            </div>
+<div class="cute-pink-bg" style="padding: 20px 0; min-height: 100vh;">
+    <!-- Awan-awan lucu -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="cloud cloud-4"></div>
 
-            {{-- Summary Cards --}}
-            <div class="row mb-4">
-                <div class="col-md-4">
-                    <div class="card bg-success text-white">
-                        <div class="card-body">
-                            <h6 class="card-title">Total Pemasukan ({{ $selectedYear }})</h6>
-                            <h3>Rp {{ number_format($totalIncome, 0, ',', '.') }}</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card bg-danger text-white">
-                        <div class="card-body">
-                            <h6 class="card-title">Total Pengeluaran ({{ $selectedYear }})</h6>
-                            <h3>Rp {{ number_format($totalExpense, 0, ',', '.') }}</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card {{ ($totalIncome - $totalExpense) >= 0 ? 'bg-primary' : 'bg-warning' }} text-white">
-                        <div class="card-body">
-                            <h6 class="card-title">Saldo ({{ $selectedYear }})</h6>
-                            <h3>Rp {{ number_format($totalIncome - $totalExpense, 0, ',', '.') }}</h3>
-                        </div>
-                    </div>
+    <div class="mt-3 container">
+        <div class="card cute-card">
+            <div class="card-header cute-header d-flex align-items-center" style="border-bottom: 2px solid #ffe5f0;">
+                <div class="flex-fill">
+                    <a href="{{ route('app.financial.index') }}" class="text-decoration-none" style="color: #ff69b4;">
+                        <small style="font-weight: 600;">← Kembali</small>
+                    </a>
+                    <h3 class="mt-2 cute-text-gradient" style="margin: 0; font-size: 1.75rem;">📊 Statistik Keuangan</h3>
                 </div>
             </div>
-
-            {{-- Monthly Trend Chart --}}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Tren Bulanan {{ $selectedYear }}</h5>
-                    <div id="monthlyTrendChart"></div>
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                {{-- Income by Category --}}
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Pemasukan per Kategori</h5>
-                            <div id="incomeCategoryChart"></div>
+            <div class="card-body" style="padding: 30px;">
+                {{-- Filter --}}
+                <div class="card cute-filter-card mb-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label" style="color: #FF69B4; font-weight: 600;">📅 Tahun</label>
+                            <select class="form-select cute-input" wire:model.live="selectedYear">
+                                @for ($year = date('Y'); $year >= 2020; $year--)
+                                    <option value="{{ $year }}">{{ $year }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" style="color: #FF69B4; font-weight: 600;">📅 Bulan (untuk kategori)</label>
+                            <select class="form-select cute-input" wire:model.live="selectedMonth">
+                                @for ($month = 1; $month <= 12; $month++)
+                                    <option value="{{ str_pad($month, 2, '0', STR_PAD_LEFT) }}">
+                                        {{ DateTime::createFromFormat('!m', $month)->format('F') }}
+                                    </option>
+                                @endfor
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                {{-- Expense by Category --}}
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Pengeluaran per Kategori</h5>
-                            <div id="expenseCategoryChart"></div>
+                {{-- Summary Cards --}}
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="cute-summary-card cute-hover-card" style="background: linear-gradient(135deg, #98FB98 0%, #90EE90 100%);">
+                            <h6 style="color: #2F5233; font-weight: 600; margin-bottom: 10px;">💵 Total Pemasukan ({{ $selectedYear }})</h6>
+                            <h3 style="color: #2F5233; font-weight: 700; margin: 0;">Rp {{ number_format($totalIncome, 0, ',', '.') }}</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="cute-summary-card cute-hover-card" style="background: linear-gradient(135deg, #FFB6C1 0%, #FFA6B6 100%);">
+                            <h6 style="color: #8B2C3A; font-weight: 600; margin-bottom: 10px;">💸 Total Pengeluaran ({{ $selectedYear }})</h6>
+                            <h3 style="color: #8B2C3A; font-weight: 700; margin: 0;">Rp {{ number_format($totalExpense, 0, ',', '.') }}</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="cute-summary-card cute-hover-card" style="background: linear-gradient(135deg, {{ ($totalIncome - $totalExpense) >= 0 ? '#ADD8E6 0%, #B0E0E6' : '#FFD700 0%, #FFC700' }} 100%);">
+                            <h6 style="color: {{ ($totalIncome - $totalExpense) >= 0 ? '#1E5A6E' : '#8B6914' }}; font-weight: 600; margin-bottom: 10px;">💎 Saldo ({{ $selectedYear }})</h6>
+                            <h3 style="color: {{ ($totalIncome - $totalExpense) >= 0 ? '#1E5A6E' : '#8B6914' }}; font-weight: 700; margin: 0;">Rp {{ number_format($totalIncome - $totalExpense, 0, ',', '.') }}</h3>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {{-- Top Categories Tables --}}
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Top 5 Kategori Pemasukan</h5>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Kategori</th>
-                                        <th class="text-end">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($topIncomeCategories as $cat)
-                                        <tr>
-                                            <td>{{ $cat->category }}</td>
-                                            <td class="text-end text-success fw-bold">Rp {{ number_format($cat->total, 0, ',', '.') }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="2" class="text-center">Belum ada data</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                {{-- Monthly Trend Chart --}}
+                <div class="card cute-card mb-4" style="border: 2px solid #ffb6c1;">
+                    <div class="card-body">
+                        <h5 style="color: #ff69b4; font-weight: 700; margin-bottom: 20px;">📈 Tren Bulanan {{ $selectedYear }}</h5>
+                        <div id="monthlyTrendChart"></div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    {{-- Income by Category --}}
+                    <div class="col-md-6">
+                        <div class="card cute-card" style="border: 2px solid #ffb6c1;">
+                            <div class="card-body">
+                                <h5 style="color: #ff69b4; font-weight: 700; margin-bottom: 20px;">💵 Pemasukan per Kategori</h5>
+                                <div id="incomeCategoryChart"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Expense by Category --}}
+                    <div class="col-md-6">
+                        <div class="card cute-card" style="border: 2px solid #ffb6c1;">
+                            <div class="card-body">
+                                <h5 style="color: #ff69b4; font-weight: 700; margin-bottom: 20px;">💸 Pengeluaran per Kategori</h5>
+                                <div id="expenseCategoryChart"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Top 5 Kategori Pengeluaran</h5>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Kategori</th>
-                                        <th class="text-end">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($topExpenseCategories as $cat)
-                                        <tr>
-                                            <td>{{ $cat->category }}</td>
-                                            <td class="text-end text-danger fw-bold">Rp {{ number_format($cat->total, 0, ',', '.') }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="2" class="text-center">Belum ada data</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+
+                {{-- Top Categories Tables --}}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card cute-card" style="border: 2px solid #ffb6c1;">
+                            <div class="card-body">
+                                <h5 style="color: #ff69b4; font-weight: 700; margin-bottom: 20px;">🏆 Top 5 Kategori Pemasukan</h5>
+                                <div class="table-responsive cute-table">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Kategori</th>
+                                                <th class="text-end">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($topIncomeCategories as $cat)
+                                                <tr>
+                                                    <td style="font-weight: 600;">{{ $cat->category }}</td>
+                                                    <td class="text-end fw-bold" style="color: #2F5233;">Rp {{ number_format($cat->total, 0, ',', '.') }}</td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="2" class="text-center" style="padding: 40px; color: #888;">
+                                                        <div style="font-size: 2rem; margin-bottom: 10px;">📭</div>
+                                                        <p style="margin: 0;">Belum ada data</p>
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card cute-card" style="border: 2px solid #ffb6c1;">
+                            <div class="card-body">
+                                <h5 style="color: #ff69b4; font-weight: 700; margin-bottom: 20px;">🏆 Top 5 Kategori Pengeluaran</h5>
+                                <div class="table-responsive cute-table">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Kategori</th>
+                                                <th class="text-end">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($topExpenseCategories as $cat)
+                                                <tr>
+                                                    <td style="font-weight: 600;">{{ $cat->category }}</td>
+                                                    <td class="text-end fw-bold" style="color: #8B2C3A;">Rp {{ number_format($cat->total, 0, ',', '.') }}</td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="2" class="text-center" style="padding: 40px; color: #888;">
+                                                        <div style="font-size: 2rem; margin-bottom: 10px;">📭</div>
+                                                        <p style="margin: 0;">Belum ada data</p>
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

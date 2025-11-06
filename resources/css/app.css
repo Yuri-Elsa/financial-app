@@ -1,11 +1,301 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
+/* ============================================================
+   🔍 Laravel View Sources
+   ============================================================ */
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
+
+/* ============================================================
+   🌸 CUTE PINK THEME BASE
+   ============================================================ */
+.cute-pink-bg {
+    background: linear-gradient(180deg, #ffe5f0 0%, #fff0f8 50%, #ffffff 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Animasi awan */
+@keyframes float-cloud {
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-20px) translateX(10px);
+    }
+}
+@keyframes float-cloud-reverse {
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-15px) translateX(-10px);
+    }
+}
+
+/* Awan-awan */
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    z-index: 0 !important;
+    opacity: 0.8;
+    pointer-events: none;
+}
+.cloud::before,
+.cloud::after {
+    content: "";
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 100px;
+}
+
+/* Variasi awan */
+.cloud-1 {
+    width: 80px;
+    height: 30px;
+    top: 50px;
+    left: 10%;
+    animation: float-cloud 6s ease-in-out infinite;
+}
+.cloud-1::before {
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 10px;
+}
+.cloud-1::after {
+    width: 40px;
+    height: 40px;
+    top: -20px;
+    right: 10px;
+}
+
+.cloud-2 {
+    width: 100px;
+    height: 35px;
+    top: 120px;
+    right: 15%;
+    animation: float-cloud-reverse 5s ease-in-out infinite;
+}
+.cloud-2::before {
+    width: 60px;
+    height: 60px;
+    top: -30px;
+    left: 15px;
+}
+.cloud-2::after {
+    width: 45px;
+    height: 45px;
+    top: -25px;
+    right: 15px;
+}
+
+.cloud-3 {
+    width: 70px;
+    height: 28px;
+    bottom: 30%;
+    left: 20%;
+    animation: float-cloud 7s ease-in-out infinite;
+}
+.cloud-3::before {
+    width: 45px;
+    height: 45px;
+    top: -22px;
+    left: 12px;
+}
+.cloud-3::after {
+    width: 35px;
+    height: 35px;
+    top: -18px;
+    right: 12px;
+}
+
+.cloud-4 {
+    width: 90px;
+    height: 32px;
+    bottom: 20%;
+    right: 25%;
+    animation: float-cloud-reverse 5.5s ease-in-out infinite;
+}
+.cloud-4::before {
+    width: 55px;
+    height: 55px;
+    top: -27px;
+    left: 15px;
+}
+.cloud-4::after {
+    width: 42px;
+    height: 42px;
+    top: -23px;
+    right: 15px;
+}
+
+/* ============================================================
+   🌼 FORM, CARD, BUTTONS
+   ============================================================ */
+.cute-card {
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+    border: 3px solid #ffb6c1;
+    position: relative;
+    overflow: hidden;
+    z-index: 10 !important;
+}
+.cute-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 192, 203, 0.1) 0%,
+        transparent 70%
+    );
+    animation: float-cloud 8s ease-in-out infinite;
+    pointer-events: none !important;
+}
+
+.cute-input {
+    border: 2px solid #ffb6c1;
+    border-radius: 15px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+.cute-input:focus {
+    outline: none;
+    border-color: #ff69b4;
+    box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.1);
+    background: white;
+}
+
+.cute-btn {
+    background: linear-gradient(135deg, #ff69b4 0%, #ffb6c1 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 30px;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+    transition: all 0.3s ease;
+}
+.cute-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+}
+
+/* ============================================================
+   ✨ KOMPONEN TAMBAHAN UNTUK DASHBOARD KEUANGAN
+   ============================================================ */
+.cute-summary-card {
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 8px 20px rgba(255, 182, 193, 0.3);
+    transition: transform 0.3s ease;
+}
+.cute-summary-card:hover {
+    transform: translateY(-5px);
+}
+.cute-filter-card {
+    border-radius: 15px;
+    border: 2px solid #ffb6c1;
+    padding: 15px;
+    background: #fff7fa;
+    box-shadow: 0 3px 10px rgba(255, 182, 193, 0.2);
+}
+.cute-table th {
+    background: #ffe5f0;
+    color: #ff69b4;
+}
+.cute-badge-success {
+    background: #98fb98;
+    color: #2f5233;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+.cute-badge-danger {
+    background: #ffb6c1;
+    color: #8b2c3a;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+.cute-badge-secondary {
+    background: #e0e0e0;
+    color: #333;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+.cute-btn-outline {
+    background: transparent;
+    border: 2px solid #ff69b4;
+    color: #ff69b4;
+    border-radius: 15px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+.cute-btn-outline:hover {
+    background: #ff69b4;
+    color: white;
+}
+
+/* ============================================================
+   🔗 INTERAKSI & FIXES
+   ============================================================ */
+form,
+input,
+button,
+.cute-card {
+    position: relative;
+    z-index: 10 !important;
+}
+a,
+.cute-link,
+.cute-auth-link {
+    position: relative;
+    z-index: 20 !important;
+    pointer-events: auto !important;
+}
+.cute-card::after,
+.cute-pink-bg::before,
+.cute-pink-bg::after,
+.cloud {
+    pointer-events: none !important;
+}
+a:hover {
+    text-decoration: underline;
+    color: #ff69b4;
+}
+
+/* ============================================================
+   📱 RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    .cloud {
+        opacity: 0.4;
+    }
+    .cute-card {
+        border-width: 2px;
+        border-radius: 20px;
+    }
+    .cute-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
 }

@@ -12,21 +12,20 @@
     <link rel="icon" href="/logo.png" type="image/x-icon" />
 
     {{-- Judul --}}
-    <title>Laravel Todolist</title>
+    <title>Aplikasi Keuangan Imut 💕</title>
 
     {{-- Styles --}}
     @livewireStyles
+    @vite('resources/css/app.css')
     <link rel="stylesheet" href="/assets/vendor/bootstrap-5.3.8-dist/css/bootstrap.min.css">
 </head>
 
-<body class="bg-light">
-    <div class="container-fluid mt-5">
-        @yield('content')
-    </div>
+<body class="cute-auth-layout">
+    @yield('content')
 
     {{-- Scripts --}}
     @livewireScripts
-    <link rel="stylesheet" href="/assets/vendor/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js">
+    <script src="/assets/vendor/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

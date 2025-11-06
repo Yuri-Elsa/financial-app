@@ -12,6 +12,11 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['prefix' => 'app', 'middleware' => 'check.auth'], function () {
 
+    // Optional route: sebagai pengganti app.home
+    Route::get('/home', function () {
+        return redirect()->route('app.financial.index');
+    })->name('app.home');
+
     // Financial Routes
     Route::prefix('financial')->group(function () {
         Route::get('/', [FinancialController::class, 'index'])->name('app.financial.index');

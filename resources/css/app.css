@@ -153,7 +153,6 @@
     border: 3px solid #ffb6c1;
     position: relative;
     overflow: hidden;
-    z-index: 10 !important;
 }
 .cute-card::before {
     content: "";
@@ -274,7 +273,7 @@
 }
 
 /* ============================================================
-   🔗 INTERAKSI & FIXES - SOLUSI UTAMA DENGAN CSS!
+   🔗 INTERAKSI & FIXES
    ============================================================ */
 
 /* CRITICAL: Decorative elements di belakang semua */
@@ -294,60 +293,46 @@
     z-index: 0 !important;
 }
 
-/* Card elements */
+/* Card elements - JANGAN paksa z-index di sini */
 .cute-card,
-.card,
+.card {
+    position: relative;
+}
+
 .card-header,
 .card-body,
 .card-footer {
     position: relative;
-    z-index: 10 !important;
+    z-index: 1;
 }
 
-/* Interactive elements */
-form,
-input,
-button,
-select,
-textarea,
-.form-control,
-.form-select,
-.btn,
-.btn-close,
-table,
-.table,
-tr,
-td,
-th,
-label,
-span {
+/* Interactive elements dalam card */
+form:not(.modal form),
+input:not(.modal input),
+button:not(.modal button),
+select:not(.modal select),
+textarea:not(.modal textarea) {
     position: relative;
-    z-index: 11 !important;
     pointer-events: auto !important;
 }
 
-a,
-.cute-link,
-.cute-auth-link {
+/* Links */
+a {
     position: relative;
-    z-index: 12 !important;
     pointer-events: auto !important;
     cursor: pointer;
 }
 
-/* ============================================================
-   🎯 MODAL FIX - INI SOLUSINYA!
-   ============================================================ */
-
-/* Reset positioning untuk modal dan parent-nya */
-.cute-pink-bg,
-.container,
-.card {
-    /* Jangan pakai position: relative untuk parent modal */
-    transform: none !important;
+a:hover {
+    text-decoration: underline;
+    color: #ff69b4;
 }
 
-/* Modal harus punya positioning sendiri yang independen */
+/* ============================================================
+   🎯 MODAL FIX - SOLUSI LENGKAP!
+   ============================================================ */
+
+/* Modal backdrop */
 .modal-backdrop {
     position: fixed !important;
     top: 0 !important;
@@ -356,8 +341,10 @@ a,
     height: 100vh !important;
     z-index: 1040 !important;
     background-color: rgba(0, 0, 0, 0.5) !important;
+    pointer-events: auto !important;
 }
 
+/* Modal container */
 .modal {
     position: fixed !important;
     top: 0 !important;
@@ -367,11 +354,18 @@ a,
     z-index: 1055 !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
+    pointer-events: none !important;
 }
 
+.modal.show {
+    pointer-events: auto !important;
+}
+
+/* Modal dialog */
 .modal-dialog {
     position: relative !important;
     width: auto !important;
+    max-width: 500px !important;
     margin: 1.75rem auto !important;
     pointer-events: none !important;
     z-index: 1060 !important;
@@ -381,6 +375,7 @@ a,
     transform: none !important;
 }
 
+/* Modal content dengan cute style */
 .modal-content {
     position: relative !important;
     display: flex !important;
@@ -389,10 +384,60 @@ a,
     pointer-events: auto !important;
     background-color: #fff !important;
     background-clip: padding-box !important;
-    border: 1px solid rgba(0, 0, 0, 0.2) !important;
-    border-radius: 0.3rem !important;
+    border: 3px solid #ffb6c1 !important;
+    border-radius: 20px !important;
     outline: 0 !important;
     z-index: 1065 !important;
+    box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3) !important;
+}
+
+/* Modal header dengan gradient pink */
+.modal-header {
+    background: linear-gradient(135deg, #ff69b4 0%, #ffb6c1 100%) !important;
+    border-radius: 17px 17px 0 0 !important;
+    border-bottom: none !important;
+    padding: 20px !important;
+    pointer-events: auto !important;
+}
+
+.modal-title {
+    color: white !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+}
+
+.modal-header .btn-close {
+    filter: brightness(0) invert(1) !important;
+    pointer-events: auto !important;
+    z-index: 1070 !important;
+    opacity: 1 !important;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 0.8 !important;
+}
+
+/* Modal body */
+.modal-body {
+    padding: 25px !important;
+    pointer-events: auto !important;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+/* Modal footer */
+.modal-footer {
+    padding: 15px 20px !important;
+    border-top: 2px solid #ffe5f0 !important;
+    pointer-events: auto !important;
+    border-radius: 0 0 17px 17px !important;
+}
+
+/* Form labels dalam modal */
+.modal .form-label {
+    color: #ff69b4 !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
 }
 
 /* Semua element dalam modal harus clickable */
@@ -406,9 +451,10 @@ a,
 .modal .form-select,
 .modal .btn,
 .modal .btn-close,
-.modal form {
+.modal form,
+.modal span,
+.modal div {
     pointer-events: auto !important;
-    z-index: auto !important;
 }
 
 /* Buttons always clickable */
@@ -419,11 +465,17 @@ button,
 .cute-btn-secondary {
     cursor: pointer !important;
     pointer-events: auto !important;
+    position: relative;
+    z-index: auto;
 }
 
-a:hover {
-    text-decoration: underline;
-    color: #ff69b4;
+/* Cute alert style untuk delete modal */
+.cute-alert {
+    border: 2px solid #ffb6c1;
+    border-radius: 15px;
+    padding: 20px;
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe5f0 100%);
+    margin-bottom: 20px;
 }
 
 /* ============================================================
@@ -440,5 +492,13 @@ a:hover {
     .cute-btn {
         padding: 10px 20px;
         font-size: 0.9rem;
+    }
+    .modal-dialog {
+        margin: 0.5rem !important;
+        max-width: calc(100% - 1rem) !important;
+    }
+    .modal-body {
+        max-height: calc(100vh - 200px);
+        padding: 20px !important;
     }
 }
